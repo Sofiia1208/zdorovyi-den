@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тести — Здоровий день</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Додаткові стилі для форми тесту */
+    .question { margin-bottom: 1rem; }
+    .result { font-weight: bold; margin-top: 1rem; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+  <header class="bg-gradient-to-r from-green-200 to-blue-100 shadow">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <div class="text-2xl font-bold text-green-800">Здоровий день</div>
+      <nav class="hidden md:flex space-x-6 font-medium text-blue-800">
+        <a href="index.html">Головна</a>
+        <a href="nutrition.html">Харчування</a>
+        <a href="activity.html">Активність</a>
+        <a href="sleep.html">Сон</a>
+        <a href="mental.html">Психічне</a>
+        <a href="tips.html">Поради</a>
+        <a href="tests.html" class="underline">Тести</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+    <section>
+      <h2 class="text-3xl font-bold text-green-800 mb-4">Чи збалансований твій раціон?</h2>
+      <p class="mb-4">Пройди тест, щоб перевірити, наскільки правильно ти харчуєшся.</p>
+      <form id="dietQuiz">
+        <div class="question">
+          <p class="font-semibold">1. Скільки порцій овочів ти їшь щодня?</p>
+          <label class="inline-flex items-center">
+            <input type="radio" name="q1" value="1" class="form-radio">
+            <span class="ml-2">Менше 2 порцій</span>
+          </label>
+          <label class="inline-flex items-center ml-4">
+            <input type="radio" name="q1" value="2" class="form-radio">
+            <span class="ml-2">2-3 порції</span>
+          </label>
+          <label class="inline-flex items-center ml-4">
+            <input type="radio" name="q1" value="3" class="form-radio">
+            <span class="ml-2">Більше 3 порцій</span>
+          </label>
+        </div>
+
+        <div class="question">
+          <p class="font-semibold">2. Скільки фруктів ти їшь щодня?</p>
+          <label class="inline-flex items-center">
+            <input type="radio" name="q2" value="1" class="form-radio">
+            <span class="ml-2">Менше 1 штуки</span>
+          </label>
+          <label class="inline-flex items-center ml-4">
+            <input type="radio" name="q2" value="2" class="form-radio">
+            <span class="ml-2">1-2 штуки</span>
+          </label>
+          <label class="inline-flex items-center ml-4">
+            <input type="radio" name="q2" value="3" class="form-radio">
+            <span class="ml-2">Більше 2 штуки</span>
+          </label>
+        </div>
+
+        <div class="question">
+          <p class="font-semibold">3. Чи їси ти цільнозернові продукти?</p>
+          <label class="inline-flex items-center">
+            <input type="radio" name="q3" value="1" class="form-radio">
+            <span class="ml-2">Ні</span>
+          </label>
+          <label class="inline-flex items-center ml-4">
+            <input type="radio" name="q3" value="3" class="form-radio">
+            <span class="ml-2">Так</span>
+          </label>
+        </div>
+
+        <button type="button" onclick="submitQuiz()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Перевірити</button>
+      </form>
+      <p id="result" class="result text-green-700"></p>
+    </section>
+  </main>
+
+  <footer class="bg-green-100 text-center py-4 text-green-800 text-sm">
+    © 2025 Здоровий день. Посилання: <a href="https://mon.gov.ua" class="underline text-blue-700">mon.gov.ua</a>
+  </footer>
+
+  <script>
+    function submitQuiz() {
+      const form = document.getElementById('dietQuiz');
+      let score = 0;
+      const totalQuestions = 3;
+      const results = document.getElementById('result');
+
+      // Перебір всіх питань
+      for (let i = 1; i <= totalQuestions; i++) {
+        const radios = form['q' + i];
+        let answered = false;
+        for (const radio of radios) {
+          if (radio.checked) {
+            score += Number(radio.value);
+            answered = true;
+            break;
+          }
+        }
+        if (!answered) {
+          results.textContent = "Будь ласка, відповідай на всі питання.";
+          return;
+        }
+      }
+
+      // Інтерпретація результату
+      let message = "";
+      if (score <= 3) {
+        message = "Ваш раціон потребує змін. Спробуйте збільшити кількість овочів, фруктів та цільнозернових продуктів.";
+      } else if (score <= 6) {
+        message = "Ваш раціон може бути кращим. Є простір для покращення.";
+      } else {
+        message = "Ваш раціон збалансований! Продовжуйте у тому ж дусі.";
+      }
+      results.textContent = "Результат тесту: " + message;
+    }
+  </script>
+</body>
+</html>
